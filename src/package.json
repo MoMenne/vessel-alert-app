@@ -1,0 +1,10 @@
+{  
+  "name": "vessel-alert-scala-integration",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Update the messaging for vessel alert",
+  "author": "ESS",
+  "dependencies": {
+    "express": "4.15.2"
+  }
+}
