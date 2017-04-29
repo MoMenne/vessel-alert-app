@@ -18,8 +18,16 @@ app.get('/', function (req, res) {
 	res.render('index.ejs');
 });
 
-io.on('connect', function(client) {
+io.on('connection', function(client) {
   console.log('we have company...');
+
+  client.on('newMessage', function(message) {
+    console.log("Message was changed to " + message);
+    fs.writeFile('message.txt', message, function(err) {
+      console.log(err);
+    });
+    client.broadcast.emit('update', message);
+  });
 
   // watch for a file change
   watcher.on('change', function(file, stat) {
@@ -29,9 +37,13 @@ io.on('connect', function(client) {
       fileText = contents;
       client.broadcast.emit('update', fileText.toString());
     });
-
   });
 
+
+});
+
+io.on('disconnect', function(client) {
+  console.log('so long!');
 });
 
 
